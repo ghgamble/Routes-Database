@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import SearchBar from './components/SearchBar';
-import List from './components/List';
+import RoutesList from './components/RoutesList';
 import AddRoute from './components/AddRoute';
 
 import firebase, { FirebaseContext } from './firebase';
@@ -22,7 +22,7 @@ const App = () => {
 
                         <div className="ui riase container segment padded">
                               <SearchBar onSearchUpdate={updateSearch} />
-                              <List />
+                              <RoutesList />
                               <AddRoute />
                         </div>
                   </div>

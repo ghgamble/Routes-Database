@@ -15,6 +15,16 @@ const List = () => {
             })
       }, [firebase.db])
 
+      const handleDelete = (e) => {
+            const id = e.currentTarget.getAttribute("data-route");
+            const routeRef = firebase.db.collection('routes').doc(id);
+            routeRef.delete().then(() => {
+                  console.log(`Document with ID ${id} deleted`);
+            }).catch(error => {
+                  console.error('Error deleting document: ', error);
+            })
+      }
+
       return (
             <table className="ui celled table">
                   <thead>
@@ -34,7 +44,7 @@ const List = () => {
                                     <td data-label="Grade">{route.grade}</td>
                                     <td data-label="Type">{route.type}</td>
                                     <td data-label="Options">
-                                          <button type="button" className="ui button">Delete</button>
+                                          <button type="button" className="ui button" data-route={route.id} onClick={handleDelete}>Delete</button>
                                           <button type="button" className="ui button">Comment</button>
                                     </td>
                               </tr>
