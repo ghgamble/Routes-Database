@@ -16,11 +16,6 @@ const RouteDetail = ({ route, index }) => {
             })
       }
 
-      const handleAddComment = () => {
-            console.log('clicked');
-            
-      }
-
       return (
             <tr index={index} key={route.id}>
                   <td data-label="Route name">{route.route}</td>
@@ -29,7 +24,6 @@ const RouteDetail = ({ route, index }) => {
                   <td data-label="Type">{route.type}</td>
                   <td data-label="Options">
                         <button type="button" className="ui button" data-delete={route.id} onClick={handleDelete}>Delete</button>
-                        <button type="button" className="ui button" onClick={handleAddComment}>Add comment</button>
                   </td>
             </tr>
       );

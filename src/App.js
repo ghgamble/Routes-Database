@@ -12,7 +12,6 @@ const App = () => {
 
       const updateSearch = (searchItem) => {
             setTerm(searchItem);
-            console.log('App.js', searchItem);
       }
 
       return (
@@ -22,7 +21,7 @@ const App = () => {
 
                         <div className="ui riase container segment padded">
                               <SearchBar onSearchUpdate={updateSearch} />
-                              <RoutesList />
+                              <RoutesList term={term} />
                               <AddRoute />
                         </div>
                   </div>

@@ -12,13 +12,15 @@ const AddRoute = () => {
       const [grade, setGrade] = useState('');
       const [type, setType] = useState('');
 
-      const { register, handleSubmit, errors } = useForm({
-            defaultValues: { route: '', setter: '', grade: '', type: '' }
-      });
+      const { register, handleSubmit, errors } = useForm();
 
       const handleCreateRoute = e => {
             const newLink = { route, setter, grade, type, comments: [], created: Date.now() };
             firebase.db.collection('routes').add(newLink);
+            clearState();
+      }
+
+      const clearState = () => {
             setRoute('');
             setSetter('');
             setGrade('');
@@ -36,7 +38,6 @@ const AddRoute = () => {
                                           name="route"
                                           id="route"
                                           placeholder="Route name"
-                                          ref={register}
                                           onChange={e => setRoute(e.target.value)}
                                           aria-invalid={errors.route ? "true" : "false"}
                                           ref={register({ required: true })}
@@ -50,7 +51,6 @@ const AddRoute = () => {
                                           name="setter"
                                           id="setter"
                                           placeholder="Setter"
-                                          ref={register}
                                           onChange={e => setSetter(e.target.value)}
                                           aria-invalid={errors.setter ? "true" : "false"}
                                           ref={register({ required: true })}
@@ -64,7 +64,6 @@ const AddRoute = () => {
                                           name="grade"
                                           id="grade"
                                           placeholder="Grade"
-                                          ref={register}
                                           onChange={e => setGrade(e.target.value)}
                                           aria-invalid={errors.grade ? "true" : "false"}
                                           ref={register({ required: true })}
