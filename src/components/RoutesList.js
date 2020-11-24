@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 
 import FirebaseContext from '../firebase/context';
+import RouteDetail from './RouteDetail';
 
 const List = () => {
       const { firebase } = useContext(FirebaseContext);
@@ -15,16 +16,6 @@ const List = () => {
             })
       }, [firebase.db])
 
-      const handleDelete = (e) => {
-            const id = e.currentTarget.getAttribute("data-route");
-            const routeRef = firebase.db.collection('routes').doc(id);
-            routeRef.delete().then(() => {
-                  console.log(`Document with ID ${id} deleted`);
-            }).catch(error => {
-                  console.error('Error deleting document: ', error);
-            })
-      }
-
       return (
             <table className="ui celled table">
                   <thead>
@@ -38,16 +29,7 @@ const List = () => {
                   </thead>
                   <tbody>
                         {routes.map((route, index) => (
-                              <tr index={index} key={route.id}>
-                                    <td data-label="Route name">{route.route}</td>
-                                    <td data-label="Setter">{route.setter}</td>
-                                    <td data-label="Grade">{route.grade}</td>
-                                    <td data-label="Type">{route.type}</td>
-                                    <td data-label="Options">
-                                          <button type="button" className="ui button" data-route={route.id} onClick={handleDelete}>Delete</button>
-                                          <button type="button" className="ui button">Comment</button>
-                                    </td>
-                              </tr>
+                              <RouteDetail index={index} key={route.id} route={route} />
                         ))}
                   </tbody>
             </table>
