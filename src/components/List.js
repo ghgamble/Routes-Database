@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+
+import FirebaseContext from '../firebase/context';
 
 const List = () => {
+      const { firebase } = useContext(FirebaseContext);
+      const [routes, setRoutes] = useState([]);
+
+      useEffect(() => {
+            firebase.db.collection('routes').orderBy('created', 'asc').onSnapshot(snapshot => {
+                  const routes = snapshot.docs.map(doc => {
+                        return { id: doc.id, ...doc.data() };
+                  })
+                  setRoutes(routes);
+            })
+      }, [firebase.db])
 
       return (
             <table className="ui celled table">
@@ -10,22 +23,22 @@ const List = () => {
                               <th>Setter</th>
                               <th>Grade</th>
                               <th>Type (TR, Lead, Boulder)</th>
-                              <th>Rating</th>
                               <th>Options</th>
                         </tr>
                   </thead>
                   <tbody>
-                        <tr>
-                              <td data-label="Route Name">Oh my</td>
-                              <td data-label="Setter">John</td>
-                              <td data-label="Grade">5.12b</td>
-                              <td data-label="Type">Lead, TR</td>
-                              <td data-label="Rating">5 stars</td>
-                              <td data-label="Options">
-                                    <button type="button" className="ui button">Delete</button>
-                                    <button type="button" className="ui button">Comment</button>
-                              </td>
-                        </tr>
+                        {routes.map((route, index) => (
+                              <tr index={index} key={route.id}>
+                                    <td data-label="Route name">{route.route}</td>
+                                    <td data-label="Setter">{route.setter}</td>
+                                    <td data-label="Grade">{route.grade}</td>
+                                    <td data-label="Type">{route.type}</td>
+                                    <td data-label="Options">
+                                          <button type="button" className="ui button">Delete</button>
+                                          <button type="button" className="ui button">Comment</button>
+                                    </td>
+                              </tr>
+                        ))}
                   </tbody>
             </table>
       );

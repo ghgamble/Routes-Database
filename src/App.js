@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import SearchBar from './components/SearchBar';
 import List from './components/List';
 import AddRoute from './components/AddRoute';
 
-const App = () => {
-      return (
-            <div>
-                  <div className="ui center aligned header" style={{marginTop: "20px"}}>Route Database</div>
+import firebase, { FirebaseContext } from './firebase';
 
-                  <div className="ui riase container segment padded">
-                        <SearchBar />
-                        <List />
-                        <AddRoute />
+const App = () => {
+
+      const [term, setTerm] = useState('');
+
+      const updateSearch = (searchItem) => {
+            setTerm(searchItem);
+            console.log('App.js', searchItem);
+      }
+
+      return (
+            <FirebaseContext.Provider value={{ firebase }}>
+                  <div>
+                        <div className="ui center aligned header" style={{marginTop: "20px"}}>Route Database</div>
+
+                        <div className="ui riase container segment padded">
+                              <SearchBar onSearchUpdate={updateSearch} />
+                              <List />
+                              <AddRoute />
+                        </div>
                   </div>
-            </div>
+            </FirebaseContext.Provider>
       );
 }
 
