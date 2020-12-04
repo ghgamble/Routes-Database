@@ -39,7 +39,7 @@ const List = ({ term }) => {
 
       return (
             <div style={{ marginTop: "5px" }}>
-                  <button className="ui submit button" onClick={handleResetSearch}>Reset Search</button>
+                  <button className="ui submit button" onClick={handleResetSearch}>Reset List</button>
                   <table className="ui celled table">
                         <thead>
                               <tr>

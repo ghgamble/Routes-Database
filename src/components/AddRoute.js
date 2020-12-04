@@ -71,17 +71,22 @@ const AddRoute = () => {
                                     />
                               </div>
                               <div className="field">
-                                    <label htmlFor="type">Type (TR, Lead, Boulder)</label>
-                                    <input
-                                          type="text"
-                                          name="type"
-                                          id="type"
-                                          placeholder="Type"
-                                          onChange={e => setType(e.target.value)}
-                                          aria-invalid={errors.grade ? "true" : "false"}
-                                          ref={register({ required: true })}
-                                          value={type}
-                                    />
+                                    <label htmlFor="type">Type</label>
+                                    <select
+                                      className="ui dropdown"
+                                      id="type" name="type"
+                                      onChange={e => setType(e.target.value)}
+                                      aria-invalid={errors.grade ? "true" : "false"}
+                                      ref={register({ required: true })}
+                                      value={type}
+                                    >
+                                      <option value="">Type</option>
+                                      <option value="TR">TR</option>
+                                      <option value="Lead">Lead</option>
+                                      <option value="Lead/TR">Lead/TR</option>
+                                      <option value="Boulder">Boulder</option>
+                                    </select>
+
                               </div>
                         </div>
                         <button className="ui button" type="submit">Add Route</button>
