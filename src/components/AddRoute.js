@@ -1,12 +1,10 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Form, Button } from 'semantic-ui-react'
 
 import FirebaseContext from '../firebase/context';
 
 const AddRoute = () => {
   const { firebase } = useContext(FirebaseContext);
-
-  const firstRender = useRef(true);
 
   const [route, setRoute] = useState('');
   const [setter, setSetter] = useState('');
@@ -16,10 +14,6 @@ const AddRoute = () => {
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
     setDisabled( formValidation() );
   }, [route, setter, grade, type]);
 
@@ -32,7 +26,6 @@ const AddRoute = () => {
   }
 
   const handleCreateRoute = e => {
-    e.preventDefault();
     const newLink = { route, setter, grade, type, comments: [], created: Date.now() };
     firebase.db.collection('routes').add(newLink);
     clearState();
