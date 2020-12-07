@@ -1,20 +1,37 @@
-import React, { useContext, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 
 import FirebaseContext from '../firebase/context';
-import './AddRoute.css';
 
 const AddRoute = () => {
-      // const { register, handleSubmit, errors } = useForm();
       const { firebase } = useContext(FirebaseContext);
+
+      const firstRender = useRef(true);
+
       const [route, setRoute] = useState('');
       const [setter, setSetter] = useState('');
       const [grade, setGrade] = useState('');
       const [type, setType] = useState('');
 
-      const { register, handleSubmit, errors } = useForm();
+      const [disabled, setDisabled] = useState(true);
+
+      useEffect(() => {
+        if (firstRender.current) {
+          firstRender.current = false;
+          return;
+        }
+        setDisabled( formValidation() );
+      }, [route, setter, grade, type]);
+
+      const formValidation = () => {
+        if (route === '' || setter === '' || grade === '' || type === '') {
+          return true;
+        } else {
+          return false;
+        }
+      }
 
       const handleCreateRoute = e => {
+            e.preventDefault();
             const newLink = { route, setter, grade, type, comments: [], created: Date.now() };
             firebase.db.collection('routes').add(newLink);
             clearState();
@@ -29,7 +46,7 @@ const AddRoute = () => {
 
       return (
             <div>
-                  <form className="ui form" onSubmit={handleSubmit(handleCreateRoute)}>
+                  <form className="ui form" onSubmit={handleCreateRoute}>
                         <div className="fields">
                               <div className="field">
                                     <label htmlFor="Route">Route name</label>
@@ -39,8 +56,6 @@ const AddRoute = () => {
                                           id="route"
                                           placeholder="Route name"
                                           onChange={e => setRoute(e.target.value)}
-                                          aria-invalid={errors.route ? "true" : "false"}
-                                          ref={register({ required: true })}
                                           value={route}
                                     />
                               </div>
@@ -52,8 +67,6 @@ const AddRoute = () => {
                                           id="setter"
                                           placeholder="Setter"
                                           onChange={e => setSetter(e.target.value)}
-                                          aria-invalid={errors.setter ? "true" : "false"}
-                                          ref={register({ required: true })}
                                           value={setter}
                                     />
                               </div>
@@ -65,35 +78,23 @@ const AddRoute = () => {
                                           id="grade"
                                           placeholder="Grade"
                                           onChange={e => setGrade(e.target.value)}
-                                          aria-invalid={errors.grade ? "true" : "false"}
-                                          ref={register({ required: true })}
                                           value={grade}
                                     />
                               </div>
                               <div className="field">
                                     <label htmlFor="type">Type</label>
-                                    <select
-                                      className="ui dropdown"
-                                      id="type" name="type"
-                                      onChange={e => setType(e.target.value)}
-                                      aria-invalid={errors.grade ? "true" : "false"}
-                                      ref={register({ required: true })}
-                                      value={type}
-                                    >
-                                      <option value="">Type</option>
-                                      <option value="TR">TR</option>
-                                      <option value="Lead">Lead</option>
-                                      <option value="Lead/TR">Lead/TR</option>
-                                      <option value="Boulder">Boulder</option>
-                                    </select>
-
+                                    <input
+                                          type="text"
+                                          name="type"
+                                          id="type"
+                                          placeholder="Type"
+                                          onChange={e => setType(e.target.value)}
+                                          value={type}
+                                    />
                               </div>
                         </div>
-                        <button className="ui button" type="submit">Add Route</button>
+                        <button className="ui button" type="submit" disabled={disabled}>Add Route</button>
                   </form>
-                  { (errors.route || errors.setter || errors.grade || errors.type) && (
-                        <span className="alert-text" role="alert">All fields are required</span>
-                  )}
             </div>
 
       );
