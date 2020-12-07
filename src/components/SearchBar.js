@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Form } from 'semantic-ui-react'
 
 const SearchBar = ({ onSearchUpdate }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,18 +11,14 @@ const SearchBar = ({ onSearchUpdate }) => {
   }
 
   return (
-    <div className="ui segment search-bar">
-      <form onSubmit={handleFormSubmit} className="ui form">
-        <div className="field">
-          <label>Search routes by route name, setter, grade, type</label>
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
-          />
-        </div>
-      </form>
-    </div>
+    <Form onSubmit={handleFormSubmit}>
+      <Form.Input
+        value={searchTerm}
+        label='Search routes by route name, setter, grade, type'
+        type='text'
+        onChange={e => setSearchTerm(e.target.value)}
+      />
+    </Form>
   );
 }
 
