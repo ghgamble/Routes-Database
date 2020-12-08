@@ -22,9 +22,9 @@ const App = () => {
         <SearchBar onSearchUpdate={updateSearch} />
         <RoutesList term={term} />
         <AddRoute />
-        </Container>
-      </FirebaseContext.Provider>
-    );
+      </Container>
+    </FirebaseContext.Provider>
+  );
 }
 
 export default App;

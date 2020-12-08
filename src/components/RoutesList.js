@@ -50,6 +50,7 @@ const List = ({ term }) => {
             <Table.HeaderCell>Grade</Table.HeaderCell>
             <Table.HeaderCell>Type (TR, Lead, Boulder)</Table.HeaderCell>
             <Table.HeaderCell>Options</Table.HeaderCell>
+            <Table.HeaderCell>Comments</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>

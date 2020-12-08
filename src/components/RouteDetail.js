@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Button, Table } from 'semantic-ui-react'
 
 import FirebaseContext from '../firebase/context';
+import AddComment from './AddComment';
 
 const RouteDetail = ({ route, index }) => {
   const { firebase } = useContext(FirebaseContext);
@@ -24,7 +25,9 @@ const RouteDetail = ({ route, index }) => {
       <Table.Cell data-label='Type'>{route.type}</Table.Cell>
       <Table.Cell data-label='Options'>
         <Button data-delete={route.id} onClick={handleDelete}>Delete</Button>
+        <AddComment route={route} />
       </Table.Cell>
+      <Table.Cell data-label='Comments'>{route.comments > 0 ? 'comments' : ''}</Table.Cell>
     </Table.Row>
   );
 }
