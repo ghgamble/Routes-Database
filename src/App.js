@@ -17,8 +17,8 @@ const App = () => {
 
   return (
     <FirebaseContext.Provider value={{ firebase }}>
-      <Container text style={{ marginTop: "5px", marginBottom: "5px" }}>
-        <Header textAlign="center">Route Database</Header>
+      <Container>
+        <Header textAlign="center" style={{ marginTop: '1em' }}>Route Database</Header>
         <SearchBar onSearchUpdate={updateSearch} />
         <RoutesList term={term} />
         <AddRoute />

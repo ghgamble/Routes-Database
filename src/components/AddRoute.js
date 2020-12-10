@@ -39,7 +39,7 @@ const AddRoute = () => {
   }
 
   return (
-    <Form onSubmit={handleCreateRoute}>
+    <Form onSubmit={handleCreateRoute} style={{ marginTop: '1em' }}>
       <Form.Group widths='equal'>
         <Form.Input
           value={route}
@@ -66,7 +66,7 @@ const AddRoute = () => {
           onChange={e => setType(e.target.value)}
         />
       </Form.Group>
-      <Button disabled={disabled}>Add Route</Button>
+      <Button disabled={disabled} style={{ marginBottom: '1em' }}>Add Route</Button>
     </Form>
   );
 }

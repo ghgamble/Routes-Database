@@ -1,27 +1,30 @@
-import React, { useState } from 'react';
-import { Button, Modal, Header, Form } from 'semantic-ui-react'
+import React, { useState, useContext } from 'react';
+import { Button, Modal, Form } from 'semantic-ui-react'
 
 import FirebaseContext from '../firebase/context';
 
 const AddComment = ({ route }) => {
+  const { firebase } = useContext(FirebaseContext);
+
   const [open, setOpen] = useState(false);
   const [comment, setComment] = useState('');
   const [success, setSuccess] = useState(false);
 
-  const handleClick = e => {
-    console.log('clicked ', route);
-  }
+  const routeRef = firebase.db.collection('routes').doc(route.id);
 
   const handleCreateComment = e => {
-    console.log(comment);
+    routeRef.get().then(doc => {
+      if (doc.exists) {
+        const prevComments = doc.data().comments;
+        const newComment = { created: Date.now(), text: comment };
+        const updatedComments = [...prevComments, newComment];
+        routeRef.update({ comments: updatedComments });
+      }
+    })
     setComment('');
     setSuccess(true);
-    setTimeout(() => {
-      setOpen(false);
-    }, 2000);
-    setTimeout(() => {
-      setSuccess(false);
-    }, 3000)
+    setTimeout(() => { setOpen(false) }, 2000);
+    setTimeout(() => { setSuccess(false) }, 3000);
   }
 
   return (
@@ -29,7 +32,7 @@ const AddComment = ({ route }) => {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button>Comment</Button>}
+      trigger={<Button color='blue'>Comment</Button>}
     >
       <Modal.Header>Add comment for: {route.route}</Modal.Header>
       <Modal.Content>
